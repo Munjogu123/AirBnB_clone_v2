@@ -11,13 +11,13 @@ env.hosts = ['54.237.4.65', '18.233.64.247']
 
 def do_pack():
     """ generates a tgz archive """
-    date = datetime.now()
-    name_archive = 'web_static_' + date.strftime('%Y%m%d%H%M%S') + '.tgz'
-    local('sudo mkdir -p versions')
-    archive = local('tar -cvzf versions/{} web_static'.format(name_archive))
-
-    if archive is not None:
-        return name_archive
+    date = datetime.now().strftime("%Y%m%d%H%M%S")
+    if isdir("versions") is False:
+        local("mkdir versions")
+    file_name = "versions/web_static_{}.tgz".format(date)
+    local("tar -cvzf {} web_static".format(file_name))
+    if file_name:
+        return file_name
     else:
         return None
 
